@@ -80,14 +80,18 @@ public class BeerController {
 	@PostMapping(path="/brewery/{id}/order")
 	public String placeOrder(Model model, @PathVariable String id, @RequestBody MultiValueMap<String,String> form){
 		
+		
 		OrderDetail od = new OrderDetail();
 		
 		od.setBreweryId(Integer.parseInt(id));
 		od.setDate(LocalDateTime.now());
 		
 
-		svc.placeOrder(od);
+		String orderId = svc.placeOrder(od);
 
+		model.addAttribute("orderId", orderId);
+
+		return "view3";
 	}
 
 }
