@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 data-th-if="${display}" data-th-text="${breweryName}"></h1>
+    <p>
+        <a href="/">Back</a>
+    </p>
+    <br>
+
+        <table data-th-if="${display}" data-th-object="${brew}">
+            <tr>
+                    <td>Description:</td>
+                    <td data-th-text="*{description}"></td>
+                </tr>
+        
+                <tr>
+                    <td> Address:</td>
+                    <td data-th-text="*{address1}"></td>
+                    <td data-th-text="*{address2}"></td>
+                </tr>
+        
+                <tr>
+                    <td>Phone:</td>
+                    <td data-th-text="*{phone}"></td>
+                </tr>
+        
+                <tr>
+                    <td>website</td>
+                    <a data-th-href=*{website}>Go</a>
+                </tr>
+        </table>
+
+        <h2>Beers</h2>
+
+        <p data-th-action="${brew}">
+        <form method= "post" data-th-action="@{brewery/{id}/order(id=*{breweryId})}">
+
+            <button type="submit">Place Order</button>
+            <br>
+            <table border="1" data-th-if="${display}">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-th-each="b: ${brew.beers}" data-th-object="${b}">
+                        <td>
+                            <span data-th-text="*{beerName}"></span> 
+                        </td>
+                        <td>
+                            <span data-th-text="*{beerDescription}"></span> 
+                        </td>
+                        <td>
+                            <input type="number" name="quantity"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+    
+            
+        </form>
+    </p>
+
+    <div data-th-if="${error}">
+        <h1>Brewery no found</h1>
+    </div>
+
+</body>
+</html>

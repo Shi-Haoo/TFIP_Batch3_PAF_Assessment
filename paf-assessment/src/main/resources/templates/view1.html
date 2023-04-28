@@ -9,8 +9,11 @@
 </head>
 <body>
     <h1 data-th-text="${styleName}"></h1>
-
-		<table border="1">
+    <p>
+        <a href="/">Back</a>
+    </p>
+    
+		<table border="1" data-th-if="${display}">
 			<thead>
 				<tr>
 					<th>Beer Name</th>
@@ -21,18 +24,22 @@
 			<tbody>
 				<tr data-th-each="b: ${beers}" data-th-object="${b}">
 					<td>
-						<span data-th-text="*{name}"></span> 
+						<span data-th-text="*{beerName}"></span> 
 					</td>
                     <td>
-						<span data-th-text="*{description}"></span> 
+						<span data-th-text="*{beerDescription}"></span> 
 					</td>
 					<td>
-						<a data-th-href="@{/beer/style/{id}?styleName={styleName}(id=*{styleId}, styleName=*{name})}">
-							<span data-th-text="*{beerCount}"></span>
+						<a data-th-href="@{/beer/brewery/{id}?breweryName(id=*{breweryId}, breweryName=*{breweryName})}">
+							<span data-th-text="*{breweryName}"></span>
 						</a>
 					</td>
 				</tr>
 			</tbody>
 		</table>
+
+        <div data-th-if="${error}">
+            <h1>No beers found for this style</h1>
+        </div>
 </body>
 </html>

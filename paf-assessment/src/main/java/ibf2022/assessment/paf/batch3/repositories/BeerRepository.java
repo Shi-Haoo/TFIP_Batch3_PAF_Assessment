@@ -1,6 +1,7 @@
 package ibf2022.assessment.paf.batch3.repositories;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,24 +62,54 @@ public class BeerRepository {
 		return beers;
 	}
 
-	// public Style getStyleNameById(String styleId){
-	// 	SqlRowSet rs = sqlTemplate.queryForRowSet(GET_STYLE_NAME_BY_ID, Integer.parseInt(styleId));
-		
-	// 	Style s = null;
-
-	// 	if(rs.first()){
-	// 		s = new Style();
-	// 		s.setStyleId(rs.getInt("id"));
-	// 		s.setName(rs.getString("style_name"));
-	// 	}
-
-	// 	return s;
-	// }
-
 	// DO NOT CHANGE THE METHOD'S NAME OR THE RETURN TYPE OF THIS METHOD
-	public Optional<Brewery> getBeersFromBrewery(/* You can add any number of parameters here */) {
+	public Optional<Brewery> getBeersFromBrewery(String breweryId) {
 		// TODO: Task 4
 
+		List<Beer> beers = new LinkedList<>();
+		
+
+		SqlRowSet rs = sqlTemplate.queryForRowSet(GET_STYLES, Integer.parseInt(breweryId));
+
+		Brewery br = null;
+		Beer b = null;
+
+		if(rs.first()){
+			br = new Brewery();
+			br.setBreweryId(rs.getInt("brewery_id"));
+			br.setName(rs.getString("brewery_name"));
+			br.setAddress1(rs.getString("address2"));
+			br.setAddress2(rs.getString("address1"));
+			br.setCity(rs.getString("city"));
+			br.setPhone(rs.getString("phone"));
+			br.setWebsite(rs.getString("website"));
+			br.setDescription(rs.getString("brew_description"));
+
+			b = new Beer();
+			b.setBeerId(rs.getInt("beer_id"));
+			b.setBeerName(rs.getString("beer_name"));
+			b.setBeerDescription(rs.getString("description"));
+			b.setBreweryId(rs.getInt("brewery_id"));
+			b.setBreweryName("brewery_name");
+			beers.add(b);
+		}
+
+		while(rs.next()){
+			b = new Beer();
+			b.setBeerId(rs.getInt("beer_id"));
+			b.setBeerName(rs.getString("beer_name"));
+			b.setBeerDescription(rs.getString("description"));
+			b.setBreweryId(rs.getInt("brewery_id"));
+			b.setBreweryName("brewery_name");
+			beers.add(b);
+		}
+
+		br.setBeers(beers);
+
+		if(beers.isEmpty())
+
 		return Optional.empty();
+
+		return Optional.of(br);
 	}
 }

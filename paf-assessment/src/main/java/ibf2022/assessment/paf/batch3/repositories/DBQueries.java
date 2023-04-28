@@ -18,11 +18,14 @@ public class DBQueries {
             ORDER BY beer_name ASC;
             """;
 
-    public static final String GET_STYLE_NAME_BY_ID = """
-            SELECT id, style_name
-            FROM styles
-            WHERE id=?;
+    public static final String GET_BEERS_FROM_BREWERIES = """
+            SELECT b.id AS beer_id, b.name AS beer_name, b.descript AS description, br.id AS brewery_id, br.name AS brewery_name, br.descript AS brew_description, br.address1 AS address1, br.address2 AS address2, br.city AS city, br.phone AS phone, br.website AS website
+            FROM beers AS b
+            LEFT JOIN breweries AS br ON br.id = b.brewery_id
+            WHERE brewery_id=?
+            ORDER BY beer_name ASC;
             """;
-
+            
+            
 
 }
