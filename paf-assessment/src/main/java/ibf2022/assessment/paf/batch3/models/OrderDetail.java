@@ -8,7 +8,7 @@ import jakarta.json.JsonArrayBuilder;
 import jakarta.json.JsonObject;
 
 public class OrderDetail {
-    private int orderId;
+    private String orderId;
     private LocalDateTime date;
     private int breweryId;
     private List<Order> orders;
@@ -17,7 +17,7 @@ public class OrderDetail {
     }
 
     
-    public OrderDetail(int orderId, LocalDateTime date, int breweryId, List<Order> orders) {
+    public OrderDetail(String orderId, LocalDateTime date, int breweryId, List<Order> orders) {
         this.orderId = orderId;
         this.date = date;
         this.breweryId = breweryId;
@@ -25,10 +25,10 @@ public class OrderDetail {
     }
 
 
-    public int getOrderId() {
+    public String getOrderId() {
         return orderId;
     }
-    public void setOrderId(int orderId) {
+    public void setOrderId(String orderId) {
         this.orderId = orderId;
     }
     public LocalDateTime getDate() {

@@ -15,7 +15,7 @@ public class OrderRepository {
 	MongoTemplate mongoTemplate;
 	// TODO: Task 5
 
-	public Integer insertOrder(OrderDetail orderd){
+	public String insertOrder(OrderDetail orderd){
 
 		Document doc = new Document();
 		doc = Document.parse(orderd.toJson().toString());

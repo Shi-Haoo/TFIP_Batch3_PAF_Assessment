@@ -1,5 +1,6 @@
 package ibf2022.assessment.paf.batch3.controllers;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,6 +82,11 @@ public class BeerController {
 		
 		OrderDetail od = new OrderDetail();
 		
+		od.setBreweryId(Integer.parseInt(id));
+		od.setDate(LocalDateTime.now());
+		
+
+		svc.placeOrder(od);
 
 	}
 
