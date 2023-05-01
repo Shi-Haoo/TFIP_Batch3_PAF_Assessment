@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Repository;
 
 import ibf2022.assessment.paf.batch3.models.Beer;
 import ibf2022.assessment.paf.batch3.models.Brewery;
@@ -15,6 +16,7 @@ import ibf2022.assessment.paf.batch3.models.Style;
 
 import static ibf2022.assessment.paf.batch3.repositories.DBQueries.*;
 
+@Repository
 public class BeerRepository {
 
 	@Autowired
@@ -46,7 +48,7 @@ public class BeerRepository {
 	public List<Beer> getBreweriesByBeer(String styleId) {
 		// TODO: Task 3
 		List<Beer> beers = new ArrayList<>();
-		SqlRowSet rs = sqlTemplate.queryForRowSet(GET_STYLES, Integer.parseInt(styleId));
+		SqlRowSet rs = sqlTemplate.queryForRowSet(GET_BREWERIES_BY_BEER, Integer.parseInt(styleId));
 
 		while(rs.next()){
 			
@@ -55,7 +57,7 @@ public class BeerRepository {
 			b.setBeerName(rs.getString("beer_name"));
 			b.setBeerDescription(rs.getString("description"));
 			b.setBreweryId(rs.getInt("brewery_id"));
-			b.setBreweryName("brewery_name");
+			b.setBreweryName(rs.getString("brewery_name"));
 			beers.add(b);
 		}
 
@@ -69,7 +71,7 @@ public class BeerRepository {
 		List<Beer> beers = new LinkedList<>();
 		
 
-		SqlRowSet rs = sqlTemplate.queryForRowSet(GET_STYLES, Integer.parseInt(breweryId));
+		SqlRowSet rs = sqlTemplate.queryForRowSet(GET_BEERS_FROM_BREWERIES, Integer.parseInt(breweryId));
 
 		Brewery br = null;
 		Beer b = null;

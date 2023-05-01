@@ -24,6 +24,12 @@ public class OrderDetail {
         this.orders = orders;
     }
 
+    public OrderDetail(LocalDateTime date, int breweryId, List<Order> orders) {
+        this.date = date;
+        this.breweryId = breweryId;
+        this.orders = orders;
+    }
+
 
     public String getOrderId() {
         return orderId;

@@ -7,9 +7,17 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Your order has been placed</h1>
-    <br>
-    <p>Your order id is <span data-th-text="${orderId}"></span></p>
+    <div data-th-if="${orderId}">
+        <h1>Your order has been placed</h1>
+        <br>
+        <p>Your order id is <span data-th-text="${orderId}"></span></p>
+        
+    </div>
+
+    <div data-th-if="${empty}">
+        <h1><span data-th-text="${empty}"></span></h1>
+        
+    </div>
     <p>
         <a href="/">Back</a>
     </p>

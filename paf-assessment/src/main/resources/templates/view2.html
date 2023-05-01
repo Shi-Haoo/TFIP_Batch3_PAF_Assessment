@@ -21,11 +21,14 @@
                 </tr>
         
                 <tr>
-                    <td> Address:</td>
+                    <td rowspan="3"> Address:</td>
                     <td data-th-text="*{address1}"></td>
-                    <td data-th-text="*{address2}"></td>
                 </tr>
-        
+
+                <tr><td data-th-text="*{address2}"></td></tr>
+
+                <tr><td data-th-text="*{city}"></td></tr>
+                
                 <tr>
                     <td>Phone:</td>
                     <td data-th-text="*{phone}"></td>
@@ -33,14 +36,16 @@
         
                 <tr>
                     <td>website</td>
-                    <a data-th-href=*{website}>Go</a>
+                    <td><a data-th-href=*{website}>Go</a></td>
                 </tr>
         </table>
 
         <h2>Beers</h2>
 
-        <p data-th-action="${brew}">
-        <form method= "post" data-th-action="@{brewery/{id}/order(id=*{breweryId})}">
+        <!--Cannot use <p data-th-object=${brew}></p>..Somehow it cannot access the value of ${brew}.
+        The url will end up as /brewery//order instead of /brewery/<breweryId>/order-->
+        <div data-th-object="${brew}">
+        <form method= "post" data-th-action="@{/brewery/{breweryId}/order(breweryId=*{breweryId})}">
 
             <button type="submit">Place Order</button>
             <br>
@@ -53,7 +58,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr data-th-each="b: ${brew.beers}" data-th-object="${b}">
+                    <!--status allows us to track the iteration status such as counts of iteration, index etc
+                    Refer to pg23 of day12 SSF notes-->
+                    <tr data-th-each="b, status: ${brew.beers}" data-th-object="${b}">
                         <td>
                             <span data-th-text="*{beerName}"></span> 
                         </td>
@@ -61,7 +68,9 @@
                             <span data-th-text="*{beerDescription}"></span> 
                         </td>
                         <td>
-                            <input type="number" name="quantity"/>
+                            <!--status.index shows the index of the current iteration. Need use data-th-name
+                            to allow us to change name of key dynamically. The key in payload will be quantity0, quantity1...-->
+                            <input type="number" data-th-name="'quantity' + ${status.index}"/>
                         </td>
                     </tr>
                 </tbody>
@@ -69,10 +78,10 @@
     
             
         </form>
-    </p>
+    </div>
 
     <div data-th-if="${error}">
-        <h1>Brewery no found</h1>
+        <h1>Brewery not found</h1>
     </div>
 
 </body>
